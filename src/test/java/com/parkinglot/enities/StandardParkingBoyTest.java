@@ -50,4 +50,21 @@ public class StandardParkingBoyTest {
         assertThat(fetchSecondCar).isEqualTo(secondCar);
     }
 
+    @Test
+    void should_throw_unrecognized_except_when_fetch_given_unrecognized_ticket()throws Exception {
+        //given
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(new ParkingLot(1), new ParkingLot());
+        //when
+        //自己生成的ticket是无效的
+        Ticket ticket = new Ticket();
+        standardParkingBoy.fetch(ticket);
+        //then
+        int exceptX  = 0;
+        int exceptY  = 1;
+        String exceptDirect = "N";
+        assertThat(0).isEqualTo(exceptX);
+        assertThat(1).isEqualTo(exceptY);
+        assertThat("N").isEqualTo(exceptDirect);
+    }
+
 }

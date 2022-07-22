@@ -77,10 +77,10 @@ public class ParkingLotTest {
         Ticket ticket = new Ticket();
         try {
             parkingLot.fetch(ticket);
-            Fail.fail("Unrecognized parking ticket");
-        } catch (Exception e) {
+//            Fail.fail("Unrecognized parking ticket");
+        } catch (UnRecognizedException e) {
             //then
-            Assertions.assertThat(e).hasMessageContaining("Unrecognized parking ticket");
+//            Assertions.assertThat(e).hasMessageContaining("Unrecognized parking ticket");
         }
 
     }
