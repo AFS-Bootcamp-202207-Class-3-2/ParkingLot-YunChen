@@ -1,8 +1,10 @@
 package com.parkinglot.exception;
 
 
+import com.parkinglot.util.Constant;
+
 public class UnAvailablePositionException extends Exception{
     public UnAvailablePositionException() {
-        super("No available position");
+        super(Constant.UnAvailablePositionException);
     }
 }

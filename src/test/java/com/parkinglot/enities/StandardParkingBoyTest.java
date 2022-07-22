@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class StandardParkingBoyTest {
@@ -79,5 +80,18 @@ public class StandardParkingBoyTest {
         //then
         UnRecognizedException unRecognizedException = assertThrows(UnRecognizedException.class, () -> standardParkingBoy.fetch(ticket));
         assertThat(unRecognizedException.getMessage()).isEqualTo(Constant.UnRecognizedTicketException);
+    }
+
+    @Test
+    void should_throw_UnAvailable_when_park_given_two_full_parking_lot()throws Exception {
+        //given
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(new ParkingLot(1), new ParkingLot(1));
+        //when
+        standardParkingBoy.park(new Car());
+        standardParkingBoy.park(new Car());
+
+        //then
+        UnAvailablePositionException unAvailablePositionException = assertThrows(UnAvailablePositionException.class, () -> standardParkingBoy.park(new Car()));
+        assertEquals(Constant.UnAvailablePositionException,unAvailablePositionException.getMessage());
     }
 }
