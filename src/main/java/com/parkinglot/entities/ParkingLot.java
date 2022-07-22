@@ -72,6 +72,7 @@ public class ParkingLot {
             correspondTicket.remove(token);
             //被使用设置为无效
             ticket.setValid(false);
+            ++this.currCapacity;
             return car;
         } else {
             return null;
@@ -83,7 +84,7 @@ public class ParkingLot {
     }
 
     public boolean isFull() {
-        return currCapacity >= capacity;
+        return currCapacity <= 0;
     }
 
 

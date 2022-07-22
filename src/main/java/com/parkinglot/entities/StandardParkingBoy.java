@@ -4,10 +4,15 @@ import cn.hutool.jwt.JWT;
 import com.parkinglot.exception.UnAvailablePositionException;
 import com.parkinglot.exception.UnRecognizedException;
 import com.parkinglot.util.Constant;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Getter
+@Setter
 public class StandardParkingBoy {
     /**
      * 所管理的停车场
