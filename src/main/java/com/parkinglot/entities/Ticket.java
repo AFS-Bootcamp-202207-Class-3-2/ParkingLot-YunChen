@@ -25,15 +25,7 @@ public class Ticket {
     public Ticket(Car car,ParkingLot parkingLot) {
         token = JWT.create()
                 .setPayload(LICENSE, car.getLicensePlate())
-                .setPayload("parkingLotKey", parkingLot.getKey())
-                .setSigner(JWTSignerUtil.none())
-                .sign();
-        this.parkingLot = parkingLot;
-    }
-    public Ticket(Car car,int id,ParkingLot parkingLot) {
-        token = JWT.create()
-                .setPayload(LICENSE, car.getLicensePlate())
-                .setPayload("id", id)
+                .setPayload("id", parkingLot.getId())
                 .setPayload("parkingLotKey", parkingLot.getKey())
                 .setSigner(JWTSignerUtil.none())
                 .sign();

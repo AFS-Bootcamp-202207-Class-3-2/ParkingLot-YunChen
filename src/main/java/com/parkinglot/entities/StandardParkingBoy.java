@@ -24,7 +24,9 @@ public class StandardParkingBoy {
 
     public StandardParkingBoy(ParkingLot... parkingLots) {
         for (int idx = 0; idx < parkingLots.length; idx++) {
-            this.parkingLots.add(parkingLots[idx]);
+            ParkingLot parkingLot = parkingLots[idx];
+            parkingLot.setId(idx);
+            this.parkingLots.add(parkingLot);
         }
     }
 
@@ -38,18 +40,16 @@ public class StandardParkingBoy {
             throw new UnRecognizedException(Constant.UnRecognizedCarException);
         }
         ParkingLot hasPositionParkingLot = null;
-        int id = 0;
         for (int idx = 0; idx < parkingLots.size(); idx++) {
             if (!parkingLots.get(idx).isFull()) {
                 hasPositionParkingLot = parkingLots.get(idx);
-                id = idx;
                 break;
             }
         }
         if (hasPositionParkingLot == null) {
             throw new UnAvailablePositionException();
         }
-        return hasPositionParkingLot.park(car, id);
+        return hasPositionParkingLot.park(car);
     }
 
     public Car fetch(Ticket ticket) throws UnRecognizedException {
