@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class StandardParkingBoyTest {
     @Test
@@ -65,4 +66,18 @@ public class StandardParkingBoyTest {
         .hasMessageContaining(Constant.UnRecognizedTicketException);
     }
 
+
+    @Test
+    void should_throw_unrecognized_except_when_fetch_given_a_used_ticked()throws Exception {
+        //given
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(new ParkingLot(1), new ParkingLot());
+        //when
+        Car car = new Car();
+        Ticket ticket = standardParkingBoy.park(car);
+        standardParkingBoy.fetch(ticket);
+
+        //then
+        UnRecognizedException unRecognizedException = assertThrows(UnRecognizedException.class, () -> standardParkingBoy.fetch(ticket));
+        assertThat(unRecognizedException.getMessage()).isEqualTo(Constant.UnRecognizedTicketException);
+    }
 }

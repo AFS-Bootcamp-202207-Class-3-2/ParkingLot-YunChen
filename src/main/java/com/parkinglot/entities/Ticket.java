@@ -24,21 +24,18 @@ public class Ticket {
     }
     public Ticket(Car car,ParkingLot parkingLot) {
         token = JWT.create()
-                .setHeader(parkingLot.getKey(),parkingLot.getKey())
                 .setPayload(LICENSE, car.getLicensePlate())
                 .setPayload("parkingLotKey", parkingLot.getKey())
-                .setSigner(JWTSignerUtil.hs256(parkingLot.getKey().getBytes()))
+                .setSigner(JWTSignerUtil.none())
                 .sign();
-        System.out.println(token.split("\\.").length);
         this.parkingLot = parkingLot;
     }
     public Ticket(Car car,int id,ParkingLot parkingLot) {
         token = JWT.create()
-                .setHeader(parkingLot.getKey(),parkingLot.getKey())
                 .setPayload(LICENSE, car.getLicensePlate())
                 .setPayload("id", id)
                 .setPayload("parkingLotKey", parkingLot.getKey())
-                .setSigner(JWTSignerUtil.hs256(parkingLot.getKey().getBytes()))
+                .setSigner(JWTSignerUtil.none())
                 .sign();
         this.parkingLot = parkingLot;
     }

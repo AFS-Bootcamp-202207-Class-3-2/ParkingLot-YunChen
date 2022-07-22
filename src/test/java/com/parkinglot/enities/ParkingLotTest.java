@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.assertj.core.api.Fail;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,7 +50,7 @@ public class ParkingLotTest {
         Ticket ticketSecond = parkingLot.park(new Car());
         //then
         Assertions.assertThatObject(new LinkedList<>(Arrays.asList(ticketFirst, ticketSecond))).
-                matches(tickets -> tickets != null);
+                matches(Objects::nonNull);
     }
 
 
@@ -77,10 +78,10 @@ public class ParkingLotTest {
         Ticket ticket = new Ticket();
         try {
             parkingLot.fetch(ticket);
-//            Fail.fail("Unrecognized parking ticket");
+            Fail.fail("Unrecognized parking ticket");
         } catch (UnRecognizedException e) {
             //then
-//            Assertions.assertThat(e).hasMessageContaining("Unrecognized parking ticket");
+            Assertions.assertThat(e).hasMessageContaining("Unrecognized parking ticket");
         }
 
     }
