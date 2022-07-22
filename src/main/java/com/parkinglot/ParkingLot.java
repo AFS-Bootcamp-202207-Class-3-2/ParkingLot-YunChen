@@ -1,11 +1,15 @@
 package com.parkinglot;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.jwt.JWT;
 import com.parkinglot.entities.Car;
 import com.parkinglot.entities.Ticket;
+import com.parkinglot.exception.UnrecognizedException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +46,10 @@ public class ParkingLot {
         return ticket;
     }
 
-    public Car fetch(Ticket ticket) {
+    public Car fetch(Ticket ticket) throws Exception {
+        if (!valid(ticket)) {
+            throw new UnrecognizedException();
+        }
         String token = ticket.getToken();
         if (correspondTicket.containsKey(token)) {
             Car car = correspondTicket.get(token);
@@ -51,6 +58,17 @@ public class ParkingLot {
         } else {
             return null;
         }
+    }
+
+    private boolean valid(Ticket ticket) {
+        return !StringUtils.isEmpty(ticket.getToken())||correspondTicket.containsKey(ticket.getToken());
+    }
+
+    public static void main(String[] args) {
+//        byte[] key = "1234567890".getBytes();
+//        String token = JWT.create().setPayload("license", "12").setKey(key).sign();
+//        JWT jwt = JWT.of(token).setKey(key);
+//        System.out.println(jwt.getPayload("license"));
     }
 
 
