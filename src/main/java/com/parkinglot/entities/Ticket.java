@@ -7,16 +7,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Ticket {
     private static final String LICENSE = "license";
     private String token = "";
 
+    public Ticket(String token) {
+        this.token = token;
+    }
+    private Car car;
     public Ticket(Car car) {
         token = JWT.create()
-                .setPayload(LICENSE, "1234567890")
+                .setPayload(LICENSE, car.getLicensePlate())
                 .sign();
+        this.car = car;
     }
+
 }

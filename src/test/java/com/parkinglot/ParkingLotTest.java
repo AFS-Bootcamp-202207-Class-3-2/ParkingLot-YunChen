@@ -32,8 +32,7 @@ public class ParkingLotTest {
         parkingLot.park(new Car());
         Ticket ticketSecond = parkingLot.park(new Car());
         //then
-//        assertThat(ticketSecond).isNull();
-        System.out.println(ticketSecond);
+        assertThat(ticketSecond).isNull();
     }
 
     @Test
@@ -41,9 +40,11 @@ public class ParkingLotTest {
         //given
         ParkingLot parkingLot = new ParkingLot();
         //when
-        Car car = parkingLot.fetch(new Ticket());
+        Car car = new Car();
+        Ticket ticket = parkingLot.park(car);
+        Car fetchCar = parkingLot.fetch(ticket);
         //then
-        assertThat(car).isNotNull();
+        assertThat(fetchCar).isNotNull();
     }
 
     @Test
@@ -52,7 +53,7 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot();
         //when
         Ticket ticketFirst = parkingLot.park(new Car());
-        Ticket ticketSecond =parkingLot.park(new Car());
+        Ticket ticketSecond = parkingLot.park(new Car());
         //then
         Assertions.assertThatObject(new LinkedList<>(Arrays.asList(ticketFirst, ticketSecond))).
                 matches(tickets -> tickets != null);
@@ -60,7 +61,12 @@ public class ParkingLotTest {
 
     @Test
     void should_return_nothing_when_fetch_given_wrong_ticket() {
-
+        //given
+        ParkingLot parkingLot = new ParkingLot();
+        //when
+        Car car = parkingLot.fetch(new Ticket());
+        //then
+        assertThat(car).isNull();
     }
 
     @Test
