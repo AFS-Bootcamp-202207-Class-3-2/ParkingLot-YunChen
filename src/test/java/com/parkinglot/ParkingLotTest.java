@@ -2,6 +2,7 @@ package com.parkinglot;
 
 import com.parkinglot.entities.Car;
 import com.parkinglot.entities.Ticket;
+import com.parkinglot.exception.UnAvailablePositionException;
 import com.parkinglot.exception.UnrecognizedException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ParkingLotTest {
 
     @Test
-    void should_give_ticket_when_park_given_car() {
+    void should_give_ticket_when_park_given_car()throws Exception {
         //given
         ParkingLot parkingLot = new ParkingLot();
         //when
@@ -26,16 +27,6 @@ public class ParkingLotTest {
         assertThat(ticket).isNotNull();
     }
 
-    @Test
-    void should_return_nothing_when_parkLot_full_given_car() {
-        //given
-        ParkingLot parkingLot = new ParkingLot(1);
-        //when
-        parkingLot.park(new Car());
-        Ticket ticketSecond = parkingLot.park(new Car());
-        //then
-        assertThat(ticketSecond).isNull();
-    }
 
     @Test
     void should_return_car_when_fetch_given_ticket()throws Exception {
@@ -50,7 +41,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_each_ticket_when_park_two_car_given_two_car() {
+    void should_return_each_ticket_when_park_two_car_given_two_car()throws Exception {
         //given
         ParkingLot parkingLot = new ParkingLot();
         //when
@@ -96,12 +87,15 @@ public class ParkingLotTest {
 
 
     @Test
-    void should_throw_error_message_no_available_when_park_given_a_full_parking_lot() {
+    void should_throw_error_message_no_available_when_park_given_a_full_parking_lot() throws Exception{
         //given
-        
+        ParkingLot fullParkingLot = new ParkingLot(1);
         //when
-        
+        fullParkingLot.park(new Car());
+        UnAvailablePositionException unAvailablePositionException = assertThrows(UnAvailablePositionException.class,
+                () -> fullParkingLot.park(new Car()));
         //then
+        assertEquals("No available position",unAvailablePositionException.getMessage());
     }
     
 

@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWT;
 import com.parkinglot.entities.Car;
 import com.parkinglot.entities.Ticket;
+import com.parkinglot.exception.UnAvailablePositionException;
 import com.parkinglot.exception.UnrecognizedException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,9 +37,9 @@ public class ParkingLot {
         currCapacity = capacity;
         correspondTicket = new HashMap<>(capacity);
     }
-    public Ticket park(Car car) {
+    public Ticket park(Car car) throws UnAvailablePositionException {
         if (currCapacity <= 0) {
-            return null;
+            throw new UnAvailablePositionException();
         }
         Ticket ticket = new Ticket();
         correspondTicket.put(ticket.getToken(), car);
