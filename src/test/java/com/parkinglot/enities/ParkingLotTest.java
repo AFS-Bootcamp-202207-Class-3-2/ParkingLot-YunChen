@@ -4,7 +4,7 @@ import com.parkinglot.entities.ParkingLot;
 import com.parkinglot.entities.Car;
 import com.parkinglot.entities.Ticket;
 import com.parkinglot.exception.UnAvailablePositionException;
-import com.parkinglot.exception.UnrecognizedException;
+import com.parkinglot.exception.UnRecognizedException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.assertj.core.api.Fail;
@@ -62,7 +62,7 @@ public class ParkingLotTest {
         Ticket ticket = parkingLot.park(new Car());
         parkingLot.fetch(ticket);
         //then
-        UnrecognizedException unrecognizedException = assertThrows(UnrecognizedException.class,
+        UnRecognizedException unrecognizedException = assertThrows(UnRecognizedException.class,
                 () -> parkingLot.fetch(ticket));
 
         assertEquals("Unrecognized parking ticket",unrecognizedException.getMessage());

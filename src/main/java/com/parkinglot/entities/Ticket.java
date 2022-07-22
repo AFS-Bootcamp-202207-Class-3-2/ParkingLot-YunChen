@@ -18,13 +18,19 @@ public class Ticket {
     public Ticket(String token) {
         this.token = token;
     }
-    private Car car;
     public Ticket(Car car) {
         token = JWT.create()
                 .setPayload(LICENSE, car.getLicensePlate())
                 .setSigner(JWTSignerUtil.none())
                 .sign();
-        this.car = car;
+        isValid = true;
+    }
+    public Ticket(Car car,int id) {
+        token = JWT.create()
+                .setPayload(LICENSE, car.getLicensePlate())
+                .setPayload("id", id)
+                .setSigner(JWTSignerUtil.none())
+                .sign();
         isValid = true;
     }
 
