@@ -13,51 +13,44 @@ import java.util.List;
 
 @Getter
 @Setter
-public class StandardParkingBoy {
-    /**
-     * 所管理的停车场
-     */
-    private List<ParkingLot> parkingLots = new ArrayList<>();
+public class StandardParkingBoy extends ParkingBoy{
 
 
 
 
     public StandardParkingBoy(ParkingLot... parkingLots) {
-        for (int idx = 0; idx < parkingLots.length; idx++) {
-            ParkingLot parkingLot = parkingLots[idx];
-            parkingLot.setId(idx);
-            this.parkingLots.add(parkingLot);
-        }
+        super(parkingLots);
     }
 
-    public void addManageNewParkingLot(ParkingLot newParkingLot) {
-        parkingLots.add(newParkingLot);
-    }
-
-
-    public Ticket park(Car car) throws UnAvailablePositionException, UnRecognizedException {
-        if (car == null) {
-            throw new UnRecognizedException(Constant.UnRecognizedCarException);
-        }
+    @Override
+    public ParkingLot selectByStrategy() {
         ParkingLot hasPositionParkingLot = null;
-        for (int idx = 0; idx < parkingLots.size(); idx++) {
-            if (!parkingLots.get(idx).isFull()) {
-                hasPositionParkingLot = parkingLots.get(idx);
+        for (int idx = 0; idx < this.getParkingLots().size(); idx++) {
+            if (!this.getParkingLots().get(idx).isFull()) {
+                hasPositionParkingLot = this.getParkingLots().get(idx);
                 break;
             }
         }
-        if (hasPositionParkingLot == null) {
-            throw new UnAvailablePositionException();
-        }
-        return hasPositionParkingLot.park(car);
+        return hasPositionParkingLot;
     }
 
-    public Car fetch(Ticket ticket) throws UnRecognizedException {
-        if (ticket == null || ticket.isUsed() || !ticket.isValid()) {
-            throw new UnRecognizedException(Constant.UnRecognizedTicketException);
-        }
-        int idx = (int) JWT.of(ticket.getToken()).getPayload("id");
-        return parkingLots.get(idx).fetch(ticket);
-    }
+
+//    public Ticket park(Car car) throws UnAvailablePositionException, UnRecognizedException {
+//        if (car == null) {
+//            throw new UnRecognizedException(Constant.UnRecognizedCarException);
+//        }
+//        ParkingLot hasPositionParkingLot = null;
+//        for (int idx = 0; idx < parkingLots.size(); idx++) {
+//            if (!parkingLots.get(idx).isFull()) {
+//                hasPositionParkingLot = parkingLots.get(idx);
+//                break;
+//            }
+//        }
+//        if (hasPositionParkingLot == null) {
+//            throw new UnAvailablePositionException();
+//        }
+//        return hasPositionParkingLot.park(car);
+//    }
+
 
 }

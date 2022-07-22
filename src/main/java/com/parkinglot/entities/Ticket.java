@@ -41,17 +41,6 @@ public class Ticket {
     }
 
 
-    public static void main(String[] args) {
-        String token;
-        token = JWT.create()
-                .setPayload(LICENSE, LICENSE)
-                .setPayload("id", "11")
-                .setPayload("parkingLotKey", "ss")
-                .setSigner(JWTSignerUtil.none())
-                .sign();
-        System.out.println(token.split("\\.").length);
-    }
-
     public boolean isUsed() {
         return isUsed;
     }
