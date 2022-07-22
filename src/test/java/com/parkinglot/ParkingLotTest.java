@@ -2,9 +2,15 @@ package com.parkinglot;
 
 import com.parkinglot.entities.Car;
 import com.parkinglot.entities.Ticket;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatObject;
 
 public class ParkingLotTest {
 
@@ -26,7 +32,8 @@ public class ParkingLotTest {
         parkingLot.park(new Car());
         Ticket ticketSecond = parkingLot.park(new Car());
         //then
-        assertThat(ticketSecond).isNull();
+//        assertThat(ticketSecond).isNull();
+        System.out.println(ticketSecond);
     }
 
     @Test
@@ -42,19 +49,18 @@ public class ParkingLotTest {
     @Test
     void should_return_each_ticket_when_park_two_car_given_two_car() {
         //given
-
+        ParkingLot parkingLot = new ParkingLot();
         //when
-
+        Ticket ticketFirst = parkingLot.park(new Car());
+        Ticket ticketSecond =parkingLot.park(new Car());
         //then
+        Assertions.assertThatObject(new LinkedList<>(Arrays.asList(ticketFirst, ticketSecond))).
+                matches(tickets -> tickets != null);
     }
 
     @Test
     void should_return_nothing_when_fetch_given_wrong_ticket() {
-        //given
 
-        //when
-
-        //then
     }
 
     @Test

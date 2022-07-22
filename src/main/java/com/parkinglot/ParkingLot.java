@@ -23,17 +23,19 @@ public class ParkingLot {
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
+        currCapacity = capacity;
     }
     public Ticket park(Car car) {
         if (currCapacity <= 0) {
             return null;
         }
-        currCapacity -= currCapacity;
+        this.currCapacity--;
         return new Ticket();
     }
 
     public Car fetch(Ticket ticket) {
         return new Car();
     }
+
 
 }
