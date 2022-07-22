@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group 'com.parkinglot'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    maven {url "https://maven.aliyun.com/repository/public"}
+    mavenCentral()
+}
+dependencies {
+    implementation("cn.hutool:hutool-all:5.8.4")
+    compileOnly 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    testCompileOnly 'org.projectlombok:lombok:1.18.4'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.4'
+    implementation 'commons-lang:commons-lang:2.6'
+    testImplementation 'org.assertj:assertj-core:3.18.1'
+    // Use JUnit Jupiter API for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+
+    // Use JUnit Jupiter Engine for testing.
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+
+    testImplementation "org.mockito:mockito-core:3.4.0"
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+tasks.withType(GroovyCompile) {   groovyOptions.encoding = "MacRoman"}
+tasks.withType(JavaCompile) {   options.encoding = 'UTF-8'}
+tasks.withType(Javadoc) {   options.encoding = 'UTF-8'}
