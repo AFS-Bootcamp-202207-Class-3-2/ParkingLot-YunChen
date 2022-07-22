@@ -45,7 +45,9 @@ public class ParkingLot {
     public Car fetch(Ticket ticket) {
         String token = ticket.getToken();
         if (correspondTicket.containsKey(token)) {
-            return correspondTicket.get(token);
+            Car car = correspondTicket.get(token);
+            correspondTicket.remove(token);
+            return car;
         } else {
             return null;
         }

@@ -72,10 +72,13 @@ public class ParkingLotTest {
     @Test
     void should_return_nothing_when_fetch_given_a_used_ticket() {
         //given
-
+        ParkingLot parkingLot = new ParkingLot();
         //when
-
+        Ticket ticket = parkingLot.park(new Car());
+        parkingLot.fetch(ticket);
+        Car car = parkingLot.fetch(ticket);
         //then
+        assertThat(car).isNull();
     }
 
 
