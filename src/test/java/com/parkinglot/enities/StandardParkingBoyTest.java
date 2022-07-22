@@ -6,9 +6,11 @@ import com.parkinglot.entities.StandardParkingBoy;
 import com.parkinglot.entities.Ticket;
 import com.parkinglot.exception.UnAvailablePositionException;
 import com.parkinglot.exception.UnRecognizedException;
+import com.parkinglot.util.Constant;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class StandardParkingBoyTest {
     @Test
@@ -57,14 +59,10 @@ public class StandardParkingBoyTest {
         //when
         //自己生成的ticket是无效的
         Ticket ticket = new Ticket();
-        standardParkingBoy.fetch(ticket);
+
         //then
-        int exceptX  = 0;
-        int exceptY  = 1;
-        String exceptDirect = "N";
-        assertThat(0).isEqualTo(exceptX);
-        assertThat(1).isEqualTo(exceptY);
-        assertThat("N").isEqualTo(exceptDirect);
+        assertThatThrownBy(() -> standardParkingBoy.fetch(ticket)).isInstanceOf(UnRecognizedException.class)
+        .hasMessageContaining(Constant.UnRecognizedTicketException);
     }
 
 }
