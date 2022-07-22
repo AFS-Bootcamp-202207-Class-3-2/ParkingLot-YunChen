@@ -19,16 +19,21 @@ public class ParkingLot {
     /**
      * 当前剩余容量
      */
-    private int locals = capacity;
+    private int currCapacity = capacity;
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
     }
     public Ticket park(Car car) {
-        if (locals <= 0) {
+        if (currCapacity <= 0) {
             return null;
         }
-        locals-=locals;
+        currCapacity -= currCapacity;
         return new Ticket();
     }
+
+    public Car fetch(Ticket ticket) {
+        return new Car();
+    }
+
 }

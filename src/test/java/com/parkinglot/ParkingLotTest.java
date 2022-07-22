@@ -32,10 +32,11 @@ public class ParkingLotTest {
     @Test
     void should_return_car_when_fetch_given_ticket() {
         //given
-
+        ParkingLot parkingLot = new ParkingLot();
         //when
-
+        Car car = parkingLot.fetch(new Ticket());
         //then
+        assertThat(car).isNotNull();
     }
 
     @Test
