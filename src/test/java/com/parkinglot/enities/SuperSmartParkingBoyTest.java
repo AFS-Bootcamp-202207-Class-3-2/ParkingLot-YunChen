@@ -4,9 +4,12 @@ import com.parkinglot.entities.Car;
 import com.parkinglot.entities.ParkingLot;
 import com.parkinglot.entities.SuperSmartParkingBoy;
 import com.parkinglot.entities.Ticket;
+import com.parkinglot.exception.UnRecognizedException;
+import com.parkinglot.util.Constant;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SuperSmartParkingBoyTest {
     @Test
@@ -60,5 +63,16 @@ public class SuperSmartParkingBoyTest {
         //then
         assertThat(firstCar).isEqualTo(fetchFirstCar);
         assertThat(secondCar).isEqualTo(fetchSecondCar);
+    }
+    
+    @Test
+    void should_throws_unrecognized_exception_when_fetch_given_a_wrong_ticket()throws Exception {
+        //given
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot(),new ParkingLot());
+        Ticket ticket = new Ticket();
+        //when
+        UnRecognizedException unRecognizedException = assertThrows(UnRecognizedException.class, () -> superSmartParkingBoy.fetch(ticket));
+        //then
+        assertThat(Constant.UnRecognizedTicketException).isEqualTo(unRecognizedException.getMessage());
     }
 }
