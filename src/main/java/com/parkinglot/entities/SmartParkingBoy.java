@@ -9,7 +9,6 @@ import java.util.*;
 
 public class SmartParkingBoy extends ParkingBoy {
 
-    private Map<String, ParkingLot> mapToParkingLot = new HashMap<>();
 
     public SmartParkingBoy(ParkingLot... parkingLots) {
         Arrays.sort(parkingLots, (beforeParkingLot, behindParkingLot) -> behindParkingLot.getCurrCapacity() -  beforeParkingLot.getCurrCapacity() );
@@ -17,7 +16,7 @@ public class SmartParkingBoy extends ParkingBoy {
         for (int idx = 0; idx < parkingLots.length; idx++) {
             parkingLotsList.add(parkingLots[idx]);
             parkingLots[idx].setParkingBoy(this);
-            mapToParkingLot.put(parkingLots[idx].getKey(), parkingLots[idx]);
+            this.getMapToParkingLot().put(parkingLots[idx].getKey(), parkingLots[idx]);
         }
     }
 
@@ -27,7 +26,7 @@ public class SmartParkingBoy extends ParkingBoy {
         this.getParkingLots().add(newParkingLot);
         updateUp(index);
         newParkingLot.setParkingBoy(this);
-        mapToParkingLot.put(newParkingLot.getKey(), newParkingLot);
+        this.getMapToParkingLot().put(newParkingLot.getKey(), newParkingLot);
     }
 
 
@@ -122,7 +121,7 @@ public class SmartParkingBoy extends ParkingBoy {
             throw new UnRecognizedException(Constant.UnRecognizedTicketException);
         }
         String parkingLotKey = (String) JWT.of(ticket.getToken()).getPayload("parkingLotKey");
-        ParkingLot parkingLot = mapToParkingLot.get(parkingLotKey);
+        ParkingLot parkingLot = this.getMapToParkingLot().get(parkingLotKey);
         Car car = parkingLot.fetch(ticket);
         updateUp(findFetchParkingLotIndex(parkingLot));
         return car;
@@ -136,6 +135,7 @@ public class SmartParkingBoy extends ParkingBoy {
             updateUp(findFetchParkingLotIndex(parkingLot));
         }
     }
+
 
 
     private int findFetchParkingLotIndex(ParkingLot parkingLot) {

@@ -1,14 +1,14 @@
 package com.parkinglot.entities;
 
-import cn.hutool.jwt.JWT;
 import com.parkinglot.exception.UnAvailablePositionException;
 import com.parkinglot.exception.UnRecognizedException;
-import com.parkinglot.util.Constant;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Setter
@@ -20,6 +20,7 @@ public abstract class ParkingBoy {
     private List<ParkingLot> parkingLots = new ArrayList<>();
 
 
+    private Map<String, ParkingLot> mapToParkingLot = new HashMap<>();
 
 
     public ParkingBoy(ParkingLot... parkingLots) {
@@ -30,6 +31,7 @@ public abstract class ParkingBoy {
         }
     }
 
+
     public abstract void addManageNewParkingLot(ParkingLot newParkingLot) ;
 
 
@@ -39,4 +41,9 @@ public abstract class ParkingBoy {
     public abstract Car fetch(Ticket ticket) throws UnRecognizedException;
 
     public abstract void watchParkingLots(ParkingLot parkingLot,String action);
+
+    public void clean() {
+        this.getMapToParkingLot().clear();
+        this.getParkingLots().clear();
+    }
 }

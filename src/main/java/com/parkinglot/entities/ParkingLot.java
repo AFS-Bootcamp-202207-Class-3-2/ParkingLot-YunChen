@@ -14,7 +14,6 @@ import java.util.Map;
 @Getter
 @Setter
 public class ParkingLot {
-
     private ParkingBoy parkingBoy;
 
     private String key = IdUtil.getSnowflakeNextIdStr();

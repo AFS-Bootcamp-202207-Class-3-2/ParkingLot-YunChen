@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class SuperSmartParkingBoy extends ParkingBoy {
 
-    private Map<String, ParkingLot> mapToParkingLot = new HashMap<>();
     private double calculateLoadFactor(ParkingLot parkingLot) {
         int currCapacity = parkingLot.getCurrCapacity();
         int totalCapacity = parkingLot.getCapacity();
@@ -29,7 +28,7 @@ public class SuperSmartParkingBoy extends ParkingBoy {
         for (int idx = 0; idx < parkingLots.length; idx++) {
             parkingLotsList.add(parkingLots[idx]);
             parkingLots[idx].setParkingBoy(this);
-            mapToParkingLot.put(parkingLots[idx].getKey(), parkingLots[idx]);
+            this.getMapToParkingLot().put(parkingLots[idx].getKey(), parkingLots[idx]);
         }
     }
     @Override
@@ -38,7 +37,7 @@ public class SuperSmartParkingBoy extends ParkingBoy {
         this.getParkingLots().add(newParkingLot);
         updateUp(index);
         newParkingLot.setParkingBoy(this);
-        mapToParkingLot.put(newParkingLot.getKey(), newParkingLot);
+        this.getMapToParkingLot().put(newParkingLot.getKey(), newParkingLot);
     }
 
     @Override
@@ -62,7 +61,7 @@ public class SuperSmartParkingBoy extends ParkingBoy {
             throw new UnRecognizedException(Constant.UnRecognizedTicketException);
         }
         String parkingLotKey = (String) JWT.of(ticket.getToken()).getPayload("parkingLotKey");
-        ParkingLot parkingLot = mapToParkingLot.get(parkingLotKey);
+        ParkingLot parkingLot = this.getMapToParkingLot().get(parkingLotKey);
         Car car = parkingLot.fetch(ticket);
         updateUp(findFetchParkingLotIndex(parkingLot));
         return car;
@@ -76,6 +75,8 @@ public class SuperSmartParkingBoy extends ParkingBoy {
             updateUp(findFetchParkingLotIndex(parkingLot));
         }
     }
+
+
     private int findFetchParkingLotIndex(ParkingLot parkingLot) {
         for (int idx = 0; idx < this.getParkingLots().size(); idx++) {
             if (parkingLot.getKey().equals(this.getParkingLots().get(idx).getKey())) {
