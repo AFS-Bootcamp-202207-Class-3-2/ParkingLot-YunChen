@@ -7,9 +7,6 @@ import com.parkinglot.util.Constant;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Getter
 @Setter
@@ -53,6 +50,11 @@ public class StandardParkingBoy extends ParkingBoy{
         }
         int idx = (int) JWT.of(ticket.getToken()).getPayload("id");
         return this.getParkingLots().get(idx).fetch(ticket);
+    }
+
+    @Override
+    public void watchParkingLots(ParkingLot parkingLot,String action) {
+
     }
 
 

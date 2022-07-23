@@ -15,6 +15,7 @@ import java.util.Map;
 @Setter
 public class ParkingLot {
 
+    private ParkingBoy parkingBoy;
 
     private String key = IdUtil.getSnowflakeNextIdStr();
 
@@ -50,6 +51,7 @@ public class ParkingLot {
         Ticket ticket = new Ticket(car,this);
         correspondTicket.put(ticket.getToken(), car);
         this.currCapacity--;
+        notifyParkBoy("park");
         return ticket;
     }
 
@@ -66,6 +68,7 @@ public class ParkingLot {
             //被使用设置为无效
             ticket.setUsed(true);
             ++this.currCapacity;
+            notifyParkBoy("fetch");
             return car;
         } else {
             return null;
@@ -81,4 +84,9 @@ public class ParkingLot {
     }
 
 
+    private void notifyParkBoy(String action){
+        if (parkingBoy != null) {
+            parkingBoy.watchParkingLots(this,action);
+        }
+    }
 }

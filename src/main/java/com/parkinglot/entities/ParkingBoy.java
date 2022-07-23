@@ -37,4 +37,6 @@ public abstract class ParkingBoy {
 
 
     public abstract Car fetch(Ticket ticket) throws UnRecognizedException;
+
+    public abstract void watchParkingLots(ParkingLot parkingLot,String action);
 }

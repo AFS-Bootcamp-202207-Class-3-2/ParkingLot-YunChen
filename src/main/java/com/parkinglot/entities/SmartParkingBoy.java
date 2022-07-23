@@ -16,6 +16,7 @@ public class SmartParkingBoy extends ParkingBoy {
         List<ParkingLot> parkingLotsList = getParkingLots();
         for (int idx = 0; idx < parkingLots.length; idx++) {
             parkingLotsList.add(parkingLots[idx]);
+            parkingLots[idx].setParkingBoy(this);
             mapToParkingLot.put(parkingLots[idx].getKey(), parkingLots[idx]);
         }
     }
@@ -25,6 +26,7 @@ public class SmartParkingBoy extends ParkingBoy {
         int index = this.getParkingLots().size();
         this.getParkingLots().add(newParkingLot);
         updateUp(index);
+        newParkingLot.setParkingBoy(this);
         mapToParkingLot.put(newParkingLot.getKey(), newParkingLot);
     }
 
@@ -119,6 +121,15 @@ public class SmartParkingBoy extends ParkingBoy {
         Car car = parkingLot.fetch(ticket);
         updateUp(findFetchParkingLotIndex(parkingLot));
         return car;
+    }
+
+    @Override
+    public void watchParkingLots(ParkingLot parkingLot, String action) {
+        if (action.equals("park")) {
+            updateDown(findFetchParkingLotIndex(parkingLot));
+        } else if (action.equals("fetch")) {
+            updateUp(findFetchParkingLotIndex(parkingLot));
+        }
     }
 
 
