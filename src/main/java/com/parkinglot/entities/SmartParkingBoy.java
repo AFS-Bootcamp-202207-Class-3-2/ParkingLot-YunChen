@@ -12,7 +12,7 @@ public class SmartParkingBoy extends ParkingBoy {
     private Map<String, ParkingLot> mapToParkingLot = new HashMap<>();
 
     public SmartParkingBoy(ParkingLot... parkingLots) {
-        Arrays.sort(parkingLots, (beforeParkingLot, behindParkingLot) -> beforeParkingLot.getCurrCapacity() - behindParkingLot.getCurrCapacity());
+        Arrays.sort(parkingLots, (beforeParkingLot, behindParkingLot) -> behindParkingLot.getCurrCapacity() -  beforeParkingLot.getCurrCapacity() );
         List<ParkingLot> parkingLotsList = getParkingLots();
         for (int idx = 0; idx < parkingLots.length; idx++) {
             parkingLotsList.add(parkingLots[idx]);
