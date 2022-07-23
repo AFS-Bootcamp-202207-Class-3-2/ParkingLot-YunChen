@@ -24,4 +24,21 @@ public class SuperSmartParkingBoyTest {
         //then
         assertThat(fetchCar).isEqualTo(car);
     }
+
+    @Test
+    void should_park_second_parking_lot_when_first_rate_large_second_given_car()throws Exception {
+        //given
+        ParkingLot firstParkingLot = new ParkingLot(2);
+        firstParkingLot.park(new Car());
+        ParkingLot secondParkingLot = new ParkingLot(2);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy();
+        superSmartParkingBoy.addManageNewParkingLot(firstParkingLot);
+        superSmartParkingBoy.addManageNewParkingLot(secondParkingLot);
+        //when
+        Car car = new Car();
+        Ticket ticket = superSmartParkingBoy.park(car);
+        Car fetchCar = secondParkingLot.fetch(ticket);
+        //then
+        assertThat(fetchCar).isEqualTo(car);
+    }
 }
