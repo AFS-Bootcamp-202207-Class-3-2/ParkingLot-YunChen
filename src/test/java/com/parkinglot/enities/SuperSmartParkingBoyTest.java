@@ -4,6 +4,7 @@ import com.parkinglot.entities.Car;
 import com.parkinglot.entities.ParkingLot;
 import com.parkinglot.entities.SuperSmartParkingBoy;
 import com.parkinglot.entities.Ticket;
+import com.parkinglot.exception.UnAvailablePositionException;
 import com.parkinglot.exception.UnRecognizedException;
 import com.parkinglot.util.Constant;
 import org.junit.jupiter.api.Test;
@@ -87,5 +88,17 @@ public class SuperSmartParkingBoyTest {
         UnRecognizedException unRecognizedException = assertThrows(UnRecognizedException.class, () -> superSmartParkingBoy.fetch(ticket));
         //then
         assertThat(Constant.UnRecognizedTicketException).isEqualTo(unRecognizedException.getMessage());
+    }
+
+    @Test
+    void should_throws_unavailable_exception_when_park_both_full_parking_log_given_car()throws Exception {
+        //given
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot(1),new ParkingLot(1));
+        superSmartParkingBoy.park(new Car());
+        superSmartParkingBoy.park(new Car());
+        //when
+        UnAvailablePositionException unAvailablePositionException = assertThrows(UnAvailablePositionException.class, () -> superSmartParkingBoy.park(new Car()));
+        //then
+        assertThat(Constant.UnAvailablePositionException).isEqualTo(unAvailablePositionException.getMessage());
     }
 }
