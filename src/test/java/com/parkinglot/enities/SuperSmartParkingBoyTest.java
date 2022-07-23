@@ -91,7 +91,7 @@ public class SuperSmartParkingBoyTest {
     }
 
     @Test
-    void should_throws_unavailable_exception_when_park_both_full_parking_log_given_car()throws Exception {
+    void should_throws_unavailable_exception_when_park_both_full_parking_lot_given_car()throws Exception {
         //given
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot(1),new ParkingLot(1));
         superSmartParkingBoy.park(new Car());
