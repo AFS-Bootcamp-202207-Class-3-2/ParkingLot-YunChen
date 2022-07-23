@@ -2,13 +2,10 @@ package com.parkinglot.entities;
 
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTException;
-import cn.hutool.jwt.JWTValidator;
 import cn.hutool.jwt.signers.JWTSignerUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -17,7 +14,7 @@ public class Ticket {
     private static final String LICENSE = "license";
     private boolean isUsed = false;
     private String token = "";
-    private ParkingLot parkingLot;
+    private String parkingLotKey;
 
     public Ticket(String token) {
         this.token = token;
@@ -29,12 +26,12 @@ public class Ticket {
                 .setPayload("parkingLotKey", parkingLot.getKey())
                 .setSigner(JWTSignerUtil.none())
                 .sign();
-        this.parkingLot = parkingLot;
+        this.parkingLotKey = parkingLot.getKey();
     }
 
     public boolean isValid(){
         try {
-            return JWT.of(token).getPayload("parkingLotKey").equals(parkingLot.getKey()) && !isUsed;
+            return JWT.of(token).getPayload("parkingLotKey").equals(parkingLotKey) && !isUsed;
         } catch (JWTException e) {
             return false;
         }

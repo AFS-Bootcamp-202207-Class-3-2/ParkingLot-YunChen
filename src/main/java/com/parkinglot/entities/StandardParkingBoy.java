@@ -23,7 +23,16 @@ public class StandardParkingBoy extends ParkingBoy{
     }
 
     @Override
-    public ParkingLot selectByStrategy() {
+    public void addManageNewParkingLot(ParkingLot newParkingLot) {
+        newParkingLot.setId(this.getParkingLots().size());
+        this.getParkingLots().add(newParkingLot);
+    }
+
+
+    public Ticket park(Car car) throws UnAvailablePositionException, UnRecognizedException {
+        if (car == null) {
+            throw new UnRecognizedException(Constant.UnRecognizedCarException);
+        }
         ParkingLot hasPositionParkingLot = null;
         for (int idx = 0; idx < this.getParkingLots().size(); idx++) {
             if (!this.getParkingLots().get(idx).isFull()) {
@@ -31,26 +40,20 @@ public class StandardParkingBoy extends ParkingBoy{
                 break;
             }
         }
-        return hasPositionParkingLot;
+        if (hasPositionParkingLot == null) {
+            throw new UnAvailablePositionException();
+        }
+        return hasPositionParkingLot.park(car);
     }
 
-
-//    public Ticket park(Car car) throws UnAvailablePositionException, UnRecognizedException {
-//        if (car == null) {
-//            throw new UnRecognizedException(Constant.UnRecognizedCarException);
-//        }
-//        ParkingLot hasPositionParkingLot = null;
-//        for (int idx = 0; idx < parkingLots.size(); idx++) {
-//            if (!parkingLots.get(idx).isFull()) {
-//                hasPositionParkingLot = parkingLots.get(idx);
-//                break;
-//            }
-//        }
-//        if (hasPositionParkingLot == null) {
-//            throw new UnAvailablePositionException();
-//        }
-//        return hasPositionParkingLot.park(car);
-//    }
+    @Override
+    public Car fetch(Ticket ticket) throws UnRecognizedException {
+        if (ticket == null || ticket.isUsed() || !ticket.isValid()) {
+            throw new UnRecognizedException(Constant.UnRecognizedTicketException);
+        }
+        int idx = (int) JWT.of(ticket.getToken()).getPayload("id");
+        return this.getParkingLots().get(idx).fetch(ticket);
+    }
 
 
 }

@@ -30,29 +30,11 @@ public abstract class ParkingBoy {
         }
     }
 
-    public void addManageNewParkingLot(ParkingLot newParkingLot) {
-        parkingLots.add(newParkingLot);
-    }
+    public abstract void addManageNewParkingLot(ParkingLot newParkingLot) ;
 
 
-    public Ticket park(Car car) throws UnAvailablePositionException, UnRecognizedException {
-        if (car == null) {
-            throw new UnRecognizedException(Constant.UnRecognizedCarException);
-        }
-        ParkingLot hasPositionParkingLot = selectByStrategy();
-        if (hasPositionParkingLot == null) {
-            throw new UnAvailablePositionException();
-        }
-        return hasPositionParkingLot.park(car);
-    }
+    public abstract Ticket park(Car car) throws UnAvailablePositionException, UnRecognizedException;
 
-    public abstract ParkingLot  selectByStrategy();
 
-    public Car fetch(Ticket ticket) throws UnRecognizedException {
-        if (ticket == null || ticket.isUsed() || !ticket.isValid()) {
-            throw new UnRecognizedException(Constant.UnRecognizedTicketException);
-        }
-        int idx = (int) JWT.of(ticket.getToken()).getPayload("id");
-        return parkingLots.get(idx).fetch(ticket);
-    }
+    public abstract Car fetch(Ticket ticket) throws UnRecognizedException;
 }
