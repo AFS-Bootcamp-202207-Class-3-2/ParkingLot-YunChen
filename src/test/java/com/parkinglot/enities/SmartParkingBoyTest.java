@@ -25,4 +25,21 @@ public class SmartParkingBoyTest {
         Car fetchCar = firstParkingLot.fetch(ticket);
         assertThat(fetchCar).isEqualTo(car);
     }
+
+    @Test
+    void should_park_to_second_empty_parking_lot_when_first_parking_lot_not_empty_given_a_car_and_two_parking_lot()throws Exception {
+        //given
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy();
+        //when
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        smartParkingBoy.addManageNewParkingLot(firstParkingLot);
+        smartParkingBoy.addManageNewParkingLot(secondParkingLot);
+        firstParkingLot.park(new Car());
+        Car checkCar = new Car();
+        Ticket ticket = smartParkingBoy.park(checkCar);
+        //then
+        Car fetchCar = secondParkingLot.fetch(ticket);
+        assertThat(checkCar).isEqualTo(fetchCar);
+    }
 }

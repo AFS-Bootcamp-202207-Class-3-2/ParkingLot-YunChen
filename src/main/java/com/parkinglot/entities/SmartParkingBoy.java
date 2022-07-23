@@ -56,18 +56,23 @@ public class SmartParkingBoy extends ParkingBoy {
     }
 
     private int updateDown(int index) {
-        int threshold = (this.getParkingLots().size() >> 1) - 1;
+        int threshold = this.getParkingLots().size() - 1;
         List<ParkingLot> parkingLots = this.getParkingLots();
         while (index <= threshold) {
             int childLeftIndex = (index << 1) + 1;
-            if (childLeftIndex + 1 >= this.getParkingLots().size()) {
+            if (childLeftIndex >= this.getParkingLots().size()) {
                 break;
             }
             //找到子节点最小
-            int childIndex = parkingLots.get(childLeftIndex).getCurrCapacity() >
-                    parkingLots.get(childLeftIndex + 1).getCurrCapacity() ?
-                    childLeftIndex :
-                    childLeftIndex + 1;
+            int childIndex;
+            if (childLeftIndex +1 < this.getParkingLots().size()) {
+                childIndex =  parkingLots.get(childLeftIndex).getCurrCapacity() >
+                        parkingLots.get(childLeftIndex + 1).getCurrCapacity() ?
+                        childLeftIndex :
+                        childLeftIndex + 1;
+            }else {
+                childIndex = childLeftIndex;
+            }
             if (swap(index, childIndex)) {
                 index = childIndex;
             } else {
