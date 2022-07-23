@@ -41,4 +41,24 @@ public class SuperSmartParkingBoyTest {
         //then
         assertThat(fetchCar).isEqualTo(car);
     }
+
+    @Test
+    void should_return_each_right_when_fetch_twice_given_two_ticket()throws Exception {
+        //given
+        ParkingLot firstParkingLot = new ParkingLot(2);
+        Car firstCar = new Car();
+        Ticket firstCarTicket = firstParkingLot.park(firstCar);
+        ParkingLot secondParkingLot = new ParkingLot(2);
+        Car secondCar = new Car();
+        Ticket secondCarTicket = secondParkingLot.park(secondCar);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy();
+        superSmartParkingBoy.addManageNewParkingLot(firstParkingLot);
+        superSmartParkingBoy.addManageNewParkingLot(secondParkingLot);
+        //when
+        Car fetchFirstCar = superSmartParkingBoy.fetch(firstCarTicket);
+        Car fetchSecondCar = superSmartParkingBoy.fetch(secondCarTicket);
+        //then
+        assertThat(firstCar).isEqualTo(fetchFirstCar);
+        assertThat(secondCar).isEqualTo(fetchSecondCar);
+    }
 }
